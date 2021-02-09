@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import './App.css';
 import Footer from './Components/Footer/Footer';
@@ -11,12 +12,17 @@ const Div = styled.div`
 
 `
 
+
 function App() {
+  const [searchValue, setSearchValue] = useState("")
+  let searchValueChanged = (e) => {
+    setSearchValue(e.target.value);
+  }
   return (
     <Div className="App">
-      <Header />
+      <Header searchValueChanged={searchValueChanged}/>
       <Heading />
-      <List />
+      <List searchValue={searchValue}/>
       <Footer className="footer"/>
     </Div>
   );

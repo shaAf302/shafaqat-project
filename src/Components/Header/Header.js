@@ -23,13 +23,23 @@ const Div = styled.div`
     .searchContact::placeholder{
         color: #999999;
     }
+
+    @media only screen and (max-width: 500px) {
+        grid-template-columns: auto;
+        .logo{
+            margin: auto;
+        }
+        input{
+            margin: 20px auto auto auto;
+        }
+    }
 `
 
-function Header() {
+function Header({searchValueChanged}) {
     return (
         <Div className="header">
             <img src={logo} alt="" className="logo"/>
-            <input className="searchContact" type="text" placeholder="Search For Contact"/>
+            <input className="searchContact" type="text" placeholder="Search For Contact" onChange={searchValueChanged}/>
         </Div>
     )
 }

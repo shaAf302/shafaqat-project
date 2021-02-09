@@ -1,5 +1,6 @@
-import React from 'react'
+// import {Animated} from "react-animated-css";
 import styled from 'styled-components'
+import {contacts} from '../../Assets/Contacts.json'
 
 const Div = styled.div`
     display: flex;
@@ -25,6 +26,7 @@ const GDiv = styled.div`
         box-shadow: 0px 2px 6px #DDDDDD;
         display: inline-block;
         margin: 15px 20px;
+        transition: 2s;
     }
     .cname{
         width: 100%;
@@ -44,54 +46,52 @@ const GDiv = styled.div`
         margin-top: 4px;
     }
 `
+function onlyUnique(value, index, self) {
+    return self.indexOf(value) === index;
+  }
+  
 
-function List() {
+function List({searchValue}) {
+    let filteredContacts = contacts.filter(contact => contact.name.toLowerCase().includes(searchValue.toLowerCase()));
+    let firstLetters = []
+
+    filteredContacts.forEach(val => {
+        // console.log(val.name[0]);
+        firstLetters.push(val.name[0]);
+    })
+
+    let unique = firstLetters.filter(onlyUnique);
+
+    let letterClicked = (e) => {
+        console.log(e.target.innerText);
+        filteredContacts = contacts.filter(contact => contact.name.toLowerCase().startsWith(e.target.innerText.toLowerCase()));
+    
+    }
+
     return (
         <div>
             <Div>
-                <div className="selector">A</div>
-                <div className="selector">C</div>
-                <div className="selector">F</div>
-                <div className="selector">K</div>
-                <div className="selector">N</div>
-                <div className="selector">T</div>
+                {
+                    unique.map(letter => (
+                        <div className="selector" onClick={letterClicked}>{letter}</div>
+                    ))
+                }
             </Div>
             <GDiv className="grid">
-                <div className="grid-item">
-                    <div className="cname">Kiss Bence</div>
-                    <div className="details">
-                        <div className="email">bencekiss@kissbence.com</div>
-                        <div className="number">+3670303030</div>
-                    </div>
-                </div>
-                <div className="grid-item">
-                    <div className="cname">Kiss Bence</div>
-                    <div className="details">
-                        <div className="email">bencekiss@kissbence.com</div>
-                        <div className="number">+3670303030</div>
-                    </div>
-                </div>
-                <div className="grid-item">
-                    <div className="cname">Kiss Bence</div>
-                    <div className="details">
-                        <div className="email">bencekiss@kissbence.com</div>
-                        <div className="number">+3670303030</div>
-                    </div>
-                </div>
-                <div className="grid-item">
-                    <div className="cname">Kiss Bence</div>
-                    <div className="details">
-                        <div className="email">bencekiss@kissbence.com</div>
-                        <div className="number">+3670303030</div>
-                    </div>
-                </div>
-                <div className="grid-item">
-                    <div className="cname">Kiss Bence</div>
-                    <div className="details">
-                        <div className="email">bencekiss@kissbence.com</div>
-                        <div className="number">+3670303030</div>
-                    </div>
-                </div>
+            {
+                filteredContacts.map(contact => {
+                    return(
+                    
+                        <div key={contact.id} className="grid-item animate__animated animate__flipInX">
+                            <div className="cname">{contact.name}</div>
+                                <div className="details">
+                                    <div className="email">{contact.email}</div>
+                                    <div className="number">{contact.phone}</div>
+                                </div>
+                        </div>
+                    )
+                })
+            }
             </GDiv>
         </div> 
     )
