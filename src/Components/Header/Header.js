@@ -28,8 +28,8 @@ const Div = styled.div`
 function Header() {
     return (
         <Div className="header">
-                <img src={logo} alt="" className="logo"/>
-                <input className="searchContact" type="text" placeholder="Search For Contact"/>
+            <img src={logo} alt="" className="logo"/>
+            <input className="searchContact" type="text" placeholder="Search For Contact"/>
         </Div>
     )
 }
